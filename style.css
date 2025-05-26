@@ -1,11 +1,4 @@
-/*
-* Diseño del Body
-*/
-body { 
-  text-align: center; 
-  font-family: sans-serif; 
-  margin: 0; 
-}
+
 /*
 * Doseño del cambas
 */
@@ -65,71 +58,6 @@ canvas {
       100% { background-color: white; }
     }
 
-/* Tabla para el ranking */ 
-table#ranking {
-  width: 80%;
-  max-width: 650px;
-  margin: 20px auto;
-  border-collapse: separate;
-  border-spacing: 0;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-  border-radius: 12px;
-  overflow: hidden;
-  background-color: white;
-}
-
-table#ranking th {
-  background-color: #ff7700;
-  color: white;
-  padding: 12px 15px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 16px;
-  border: none;
-}
-
-table#ranking td {
-  padding: 10px 15px;
-  text-align: center;
-  border-bottom: 1px solid #eee;
-}
-
-table#ranking tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-table#ranking tr:hover {
-  background-color: #f0f0f0;
-  transition: background-color 0.3s ease;
-}
-
-/* 
-* Destacar la primera posición 
-*/
-table#ranking tr:nth-child(2) {
-  background-color: #fff3e0;
-  font-weight: bold;
-}
-
-/* 
-* Estilo específico para la columna de posición 
-*/
-table#ranking td:first-child {
-  font-weight: bold;
-  color: #ff7700;
-}
-
-/* 
-* Título para la tabla de ranking si lo tienes 
-*/
-.ranking-title {
-  color: white;
-  text-align: center;
-  margin: 20px 0 10px;
-  font-size: 24px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
 /* 
 * Diseño del contenedor de inicio
 */
@@ -163,6 +91,7 @@ table#ranking td:first-child {
   border-radius: 10px;
   margin-bottom: 15px;
 } 
+
 /* o #222 para un tono más suave
 body {
   background: #111; 
@@ -175,6 +104,8 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   margin: 0;
+  text-align: center; 
+  font-family: sans-serif; 
 }
 
 #endScreen.visible {
@@ -183,119 +114,6 @@ body {
 #rankingContainerEnd {
   display: block;
 }
-
-/*
-* para movil
-*/
-
-@media (max-width: 600px) {
-  table#ranking {
-    width: 95%;
-    font-size: 14px;
-    border-radius: 8px;
-  }
-
-  table#ranking th, 
-  table#ranking td {
-    padding: 8px 10px;
-  }
-
-  .ranking-title {
-    font-size: 20px;
-    margin: 15px 0;
-  }
-
-  .start-container {
-    width: 95%;
-    padding: 20px;
-  }
-
-  #inputAlias {
-    font-size: 14px;
-  }
-
-  button {
-    font-size: 14px;
-    padding: 8px 16px;
-  }
-}
-
-/*
-* Controles moviles
-*/
-#mobileControls {
-  position: fixed;
-  bottom: 120px; /* ↑ súbelo ajustando este valor */
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-}
-
-
-
-#mobileControls .grid {
-  display: grid;
-  grid-template-columns: 80px 80px 80px;
-  grid-template-rows: 80px 80px;
-  gap: 10px;
-  justify-items: center;
-  align-items: center;
-}
-
-/* Posiciones en la cuadrícula */
-.ctrl[data-dir="ArrowUp"] {
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
-}
-
-.ctrl[data-dir="ArrowLeft"] {
-  grid-column: 1 / 2;
-  grid-row: 2 / 3;
-}
-
-.ctrl[data-dir="ArrowRight"] {
-  grid-column: 3 / 4;
-  grid-row: 2 / 3;
-}
-
-.ctrl[data-dir="ArrowDown"] {
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
-}
-
-/* Espaciador invisible para mantener el diseño */
-.spacer {
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
-  width: 80px;
-  height: 80px;
-  visibility: hidden;
-}
-
-/* Estilo de los botones */
-.ctrl {
-  width: 80px;
-  height: 80px;
-  font-size: 32px;
-  background: linear-gradient(to bottom, #2e2e2e, #1a1a1a);
-  color: #fff;
-  border: 2px solid #555;
-  border-radius: 20px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-  transition: transform 0.1s ease, box-shadow 0.2s ease;
-}
-
-/* Efecto al presionar */
-.ctrl:active {
-  transform: scale(0.95);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
-}
-
-/* Para mejorar experiencia táctil en móviles */
-.ctrl:focus {
-  outline: none;
-}
-
 
 /*
 * volver al inicio
@@ -309,63 +127,4 @@ body {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-}
-
-
-/**
-* Diseño de los botones
-*/
-/* Móviles pequeños (menos de 480px) */
-@media (max-width: 480px) {
-  #mobileControls {
-    bottom: 80px;
-  }
-
-  .ctrl {
-    width: 60px;
-    height: 60px;
-    font-size: 24px;
-  }
-
-  .spacer {
-    width: 60px;
-    height: 60px;
-  }
-
-  #mobileControls .grid {
-    grid-template-columns: 60px 60px 60px;
-    grid-template-rows: 60px 60px;
-    gap: 8px;
-  }
-}
-
-/* Pantallas medianas (entre 481px y 768px) */
-@media (min-width: 481px) and (max-width: 768px) {
-  #mobileControls {
-    bottom: 100px;
-  }
-
-  .ctrl {
-    width: 70px;
-    height: 70px;
-    font-size: 28px;
-  }
-
-  .spacer {
-    width: 70px;
-    height: 70px;
-  }
-
-  #mobileControls .grid {
-    grid-template-columns: 70px 70px 70px;
-    grid-template-rows: 70px 70px;
-    gap: 10px;
-  }
-}
-
-/* Pantallas grandes (más de 768px) */
-@media (min-width: 769px) {
-  #mobileControls {
-    bottom: 120px;
-  }
 }

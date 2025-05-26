@@ -196,6 +196,26 @@ document.querySelectorAll('#mobileControls .ctrl').forEach(btn => {
     document.getElementById('stats').textContent =
       `Nivel: ${level} | Victorias: ${wins} | Muertes: ${deaths}`;
     }
+    // Función auxiliar para resetear el estado del juego (útil para debug)
+function resetGameState() {
+  level = 1;
+  wins = 0;
+  deaths = 0;
+  keys = {};
+  gameRunning = false;
+  aliasJugador = '';
+  
+  player.x = 250;
+  player.y = 200;
+  
+  bomb.exploding = false;
+  bomb.explosionRadius = 2;
+  
+  canvas.classList.remove('flash');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  updateStats();
+}
 
     /**
      * dibuja el juego
@@ -288,6 +308,7 @@ if (bomb.exploding) {
 /**
  * este start game permite ingresar el nombre al iniciar
  */
+// Mejorar startGame para asegurar que empiece limpio
 function startGame() {
   aliasJugador = document.getElementById('inputAlias').value.trim();
 
@@ -296,13 +317,18 @@ function startGame() {
     return;
   }
 
+  // Asegurar que el juego esté completamente reseteado antes de empezar
+  detenerJuegoCompletamente();
+  
+  // Configurar pantallas
   startScreen.classList.remove('visible');
   endScreen.classList.remove('visible');
   canvas.style.display = 'block';
   
-  // 👈 MOSTRAR CONTROLES MÓVILES AL INICIAR EL JUEGO
+  // Mostrar controles móviles
   mostrarControlesMoviles();
   
+  // Iniciar juego
   gameRunning = true;
   updateStats();
   gameLoop();
@@ -314,12 +340,17 @@ function startGame() {
      * muestra la ventana al finalizar el juego
      */
 function showEndScreen() {
+  // Detener el juego completamente
+  gameRunning = false;
+  
+  // Cambiar pantallas
   endScreen.classList.add('visible');
   canvas.style.display = 'none';
   
-  // 👈 OCULTAR CONTROLES MÓVILES AL TERMINAR EL JUEGO
+  // Ocultar controles móviles
   ocultarControlesMoviles();
   
+  // Guardar nivel y mostrar resultado
   guardarNivelMaximo(level);
 }
 
@@ -389,7 +420,9 @@ function restartGame() {
     });
   }
 }
-
+/**
+ * hace que se muestre los ranking
+ */
 
 function mostrarRankingEn(pantalla) {
   const container = document.getElementById('rankingContainer' + pantalla);
@@ -431,44 +464,105 @@ function mostrarRankingEn(pantalla) {
       console.error("Error al cargar ranking:", error);
     });
 }
-
-
+/**
+ * hace que se muestren las pantallas
+ */
     function mostrarPantallaInicio() {
       document.getElementById('startScreen').classList.add('visible');
       document.getElementById('endScreen').classList.remove('visible');
       mostrarRankingEn('Start');
     }
-    /* 
-    *se desactiva porque ya no esta en uso
-    function mostrarPantallaFinal() {
-      document.getElementById('startScreen').classList.remove('visible');
-      document.getElementById('endScreen').classList.add('visible');
-      mostrarRankingEn('End');
-    }*/
-
     window.onload = () => {
       mostrarRankingEn('Start');
     };
 
-    //function mostrarRanking() {
-  //mostrarRankingEn('Start');
-  //mostrarRankingEn('Game');
-  //mostrarRankingEn('End');
-//}
+// Función para detener completamente el juego
+function detenerJuegoCompletamente() {
+  // Detener el juego
+  gameRunning = false;
+  
+  // Resetear variables del juego
+  level = 1;
+  wins = 0;
+  deaths = 0;
+  keys = {}; // Limpiar teclas presionadas
+  
+  // Resetear posición del jugador
+  player.x = 250;
+  player.y = 200;
+  
+  // Resetear bomba
+  bomb.exploding = false;
+  bomb.explosionRadius = 2;
+  
+  // Limpiar canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Remover efectos visuales si existen
+  canvas.classList.remove('flash');
+  
+  // Actualizar stats (opcional, para mostrar valores reseteados)
+  updateStats();
+}
 
-/**
- * Volver al inicio
- */
+// Función mejorada para volver al inicio
 document.getElementById('btnVolverInicio').addEventListener('click', () => {
+  // Guardar el nivel antes de resetear
+  guardarNivelMaximo(level);
+  
+  // Detener completamente el juego
+  detenerJuegoCompletamente();
+  
+  // Cambiar pantallas
   endScreen.classList.remove('visible');
   startScreen.classList.add('visible');
+  canvas.style.display = 'none'; // Ocultar canvas
   
-  // 👈 OCULTAR CONTROLES MÓVILES AL VOLVER AL INICIO
+  // Ocultar controles móviles
   ocultarControlesMoviles();
   
+  // Mostrar ranking actualizado
   mostrarRankingEn('Start');
+  
+  // Limpiar el campo de nombre (opcional)
+  document.getElementById('inputAlias').value = '';
+  aliasJugador = '';
 });
 
+// También agregar esta función para casos donde necesites detener el juego desde otros lugares
+function volverAlInicio() {
+  // Guardar progreso actual
+  if (level > 1) {
+    guardarNivelMaximo(level);
+  }
+  
+  // Detener juego completamente
+  detenerJuegoCompletamente();
+  
+  // Mostrar pantalla de inicio
+  startScreen.classList.add('visible');
+  endScreen.classList.remove('visible');
+  canvas.style.display = 'none';
+  
+  // Ocultar controles móviles
+  ocultarControlesMoviles();
+  
+  // Actualizar ranking
+  mostrarRankingEn('Start');
+  
+  // Reset del formulario
+  document.getElementById('inputAlias').value = '';
+  aliasJugador = '';
+}
+
+// Opcional: Agregar botón ESC para salir del juego en cualquier momento
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && gameRunning) {
+    if (confirm('¿Seguro que quieres salir del juego?')) {
+      volverAlInicio();
+    }
+  }
+});
 
 /**
  * Controles Nuevos
@@ -541,9 +635,3 @@ function inicializarControlesMoviles() {
 document.addEventListener('DOMContentLoaded', () => {
   inicializarControlesMoviles();
 });
-/**
- * HTML actualizado para los controles (usar en tu HTML)
- */
-
-
-

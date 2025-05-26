@@ -1,0 +1,65 @@
+
+/* Tabla para el ranking */ 
+table#ranking {
+  width: 80%;
+  max-width: 650px;
+  margin: 20px auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: white;
+}
+
+table#ranking th {
+  background-color: #ff7700;
+  color: white;
+  padding: 15px 25px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+}
+
+table#ranking td {
+  padding: 10px 15px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+table#ranking tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table#ranking tr:hover {
+  background-color: #f0f0f0;
+  transition: background-color 0.3s ease;
+}
+
+/* 
+* Destacar la primera posición 
+*/
+table#ranking tr:nth-child(2) {
+  background-color: #fff3e0;
+  font-weight: bold;
+}
+
+/* 
+* Estilo específico para la columna de posición 
+*/
+table#ranking td:first-child {
+  font-weight: bold;
+  color: #ff7700;
+}
+
+/* 
+* Título para la tabla de ranking si lo tienes 
+*/
+.ranking-title {
+  color: white;
+  text-align: center;
+  margin: 20px 0 10px;
+  font-size: 24px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}

@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <title>Juego de Esquivar Explosión</title>
   <link rel="stylesheet" href="style.css"> </style>
-  <link rel="stylesheet" href="styleControles.css"> </style>
+  <link rel="stylesheet" href="Estilos/styleControles.css"> </style>
+  <link rel="stylesheet" href="Estilos/styleRanking.css"> </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -47,28 +48,6 @@
 
 <!-- llamadas a otros JS -->
 <script src="firebase.js"></script>
-
-
-
-<!-- Plantilla oculta de ranking -->
-<!-- Ranking reutilizable -->
-<div id="rankingTemplate" style="display: none;">
-  <div class="ranking-title">
-    <h2>🏆 Ranking Global</h2>
-  </div>
-  <table id="ranking" border="1" style="margin-top: 10px; border-collapse: collapse;">
-    <thead>
-      <tr>
-        <th>Posición</th>
-        <th>ID Jugador</th>
-        <th>Nivel Máximo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Se llenará desde JS -->
-    </tbody>
-  </table>
-</div>
 
 <div id="mobileControls">
   <div class="grid">
