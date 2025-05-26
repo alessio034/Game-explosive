@@ -12,7 +12,7 @@ body {
 canvas { 
   border: 10px solid #333;
   background: white; 
-  display: none; 
+  display: flex; 
   margin: 20px auto; 
   box-shadow: 0 0 30px rgba(255,255,255,0.2);
 }
