@@ -225,32 +225,77 @@ body {
 */
 #mobileControls {
   position: fixed;
-  bottom: 20px;
+  bottom: 120px; /* ↑ súbelo ajustando este valor */
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
-  display: flex; /* Solo se muestra en móvil */
-  text-align: center;
 }
 
-#mobileControls .ctrl {
-  width: 60px;
-  height: 60px;
-  font-size: 24px;
-  margin: 5px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
+
+
+#mobileControls .grid {
+  display: grid;
+  grid-template-columns: 80px 80px 80px;
+  grid-template-rows: 80px 80px;
+  gap: 10px;
+  justify-items: center;
+  align-items: center;
 }
 
-/* Mostrar en pantallas pequeñas */
-@media (max-width: 768px) {
-  #mobileControls {
-    display: block;
-  }
+/* Posiciones en la cuadrícula */
+.ctrl[data-dir="ArrowUp"] {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
 }
+
+.ctrl[data-dir="ArrowLeft"] {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+
+.ctrl[data-dir="ArrowRight"] {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+}
+
+.ctrl[data-dir="ArrowDown"] {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+/* Espaciador invisible para mantener el diseño */
+.spacer {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  width: 80px;
+  height: 80px;
+  visibility: hidden;
+}
+
+/* Estilo de los botones */
+.ctrl {
+  width: 80px;
+  height: 80px;
+  font-size: 32px;
+  background: linear-gradient(to bottom, #2e2e2e, #1a1a1a);
+  color: #fff;
+  border: 2px solid #555;
+  border-radius: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+/* Efecto al presionar */
+.ctrl:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* Para mejorar experiencia táctil en móviles */
+.ctrl:focus {
+  outline: none;
+}
+
 
 /*
 * volver al inicio
@@ -264,4 +309,63 @@ body {
   border: none;
   border-radius: 10px;
   cursor: pointer;
+}
+
+
+/**
+* Diseño de los botones
+*/
+/* Móviles pequeños (menos de 480px) */
+@media (max-width: 480px) {
+  #mobileControls {
+    bottom: 80px;
+  }
+
+  .ctrl {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+  }
+
+  .spacer {
+    width: 60px;
+    height: 60px;
+  }
+
+  #mobileControls .grid {
+    grid-template-columns: 60px 60px 60px;
+    grid-template-rows: 60px 60px;
+    gap: 8px;
+  }
+}
+
+/* Pantallas medianas (entre 481px y 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  #mobileControls {
+    bottom: 100px;
+  }
+
+  .ctrl {
+    width: 70px;
+    height: 70px;
+    font-size: 28px;
+  }
+
+  .spacer {
+    width: 70px;
+    height: 70px;
+  }
+
+  #mobileControls .grid {
+    grid-template-columns: 70px 70px 70px;
+    grid-template-rows: 70px 70px;
+    gap: 10px;
+  }
+}
+
+/* Pantallas grandes (más de 768px) */
+@media (min-width: 769px) {
+  #mobileControls {
+    bottom: 120px;
+  }
 }

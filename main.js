@@ -299,27 +299,29 @@ function startGame() {
   startScreen.classList.remove('visible');
   endScreen.classList.remove('visible');
   canvas.style.display = 'block';
+  
+  // 👈 MOSTRAR CONTROLES MÓVILES AL INICIAR EL JUEGO
+  mostrarControlesMoviles();
+  
   gameRunning = true;
   updateStats();
   gameLoop();
   startExplosionCycle();
-  //mostrarRanking();
-  mostrarRankingEn('Start');
-  mostrarRankingEn('Game');
-
 }
 
 
     /**
      * muestra la ventana al finalizar el juego
-     * falta hacer que muestre el ranking al finalizar para que puedan ver en que nivel quedaron
      */
-  function showEndScreen() {
+function showEndScreen() {
   endScreen.classList.add('visible');
   canvas.style.display = 'none';
+  
+  // 👈 OCULTAR CONTROLES MÓVILES AL TERMINAR EL JUEGO
+  ocultarControlesMoviles();
+  
   guardarNivelMaximo(level);
-  mostrarRankingEn('End'); 
-  }
+}
 
 
     /**
@@ -366,13 +368,15 @@ function restartGame() {
   updateStats();
   endScreen.classList.remove('visible');
   canvas.style.display = 'block';
+  
+  // 👈 MOSTRAR CONTROLES MÓVILES AL REINICIAR
+  mostrarControlesMoviles();
+  
   gameRunning = true;
   player.x = 250;
   player.y = 200;
   gameLoop();
   startExplosionCycle();
-  //mostrarRanking();
-  mostrarRankingEn('End');
   guardarNivelMaximo(level);
 
   if (userId) {
@@ -385,6 +389,8 @@ function restartGame() {
     });
   }
 }
+
+
 function mostrarRankingEn(pantalla) {
   const container = document.getElementById('rankingContainer' + pantalla);
   if (!container) return;
@@ -432,22 +438,23 @@ function mostrarRankingEn(pantalla) {
       document.getElementById('endScreen').classList.remove('visible');
       mostrarRankingEn('Start');
     }
-
+    /* 
+    *se desactiva porque ya no esta en uso
     function mostrarPantallaFinal() {
       document.getElementById('startScreen').classList.remove('visible');
       document.getElementById('endScreen').classList.add('visible');
       mostrarRankingEn('End');
-    }
+    }*/
 
     window.onload = () => {
       mostrarRankingEn('Start');
     };
 
-    function mostrarRanking() {
-  mostrarRankingEn('Start');
-  mostrarRankingEn('Game');
-  mostrarRankingEn('End');
-}
+    //function mostrarRanking() {
+  //mostrarRankingEn('Start');
+  //mostrarRankingEn('Game');
+  //mostrarRankingEn('End');
+//}
 
 /**
  * Volver al inicio
@@ -455,6 +462,88 @@ function mostrarRankingEn(pantalla) {
 document.getElementById('btnVolverInicio').addEventListener('click', () => {
   endScreen.classList.remove('visible');
   startScreen.classList.add('visible');
+  
+  // 👈 OCULTAR CONTROLES MÓVILES AL VOLVER AL INICIO
+  ocultarControlesMoviles();
+  
   mostrarRankingEn('Start');
 });
+
+
+/**
+ * Controles Nuevos
+ */
+// 2. Función para mostrar/ocultar controles móviles
+function mostrarControlesMoviles() {
+  const mobileControls = document.getElementById('mobileControls');
+  if (mobileControls) {
+    mobileControls.classList.add('visible');
+  }
+}
+
+function ocultarControlesMoviles() {
+  const mobileControls = document.getElementById('mobileControls');
+  if (mobileControls) {
+    mobileControls.classList.remove('visible');
+  }
+}
+/**
+ * Función para detectar si es dispositivo móvil (opcional)
+ */
+function esDispositivoMovil() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+         (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
+}
+/**
+ * Inicializar controles móviles mejorados con mejor detección de eventos
+ */
+function inicializarControlesMoviles() {
+  const controles = document.querySelectorAll('#mobileControls .ctrl');
+  
+  controles.forEach(btn => {
+    const key = btn.dataset.dir;
+    
+    // Touch events
+    btn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      keys[key] = true;
+      btn.style.background = 'rgba(255, 255, 255, 0.3)';
+    }, { passive: false });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      keys[key] = false;
+      btn.style.background = 'rgba(255, 255, 255, 0.1)';
+    }, { passive: false });
+    
+    // Mouse events para testing en desktop
+    btn.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      keys[key] = true;
+      btn.style.background = 'rgba(255, 255, 255, 0.3)';
+    });
+    
+    btn.addEventListener('mouseup', (e) => {
+      e.preventDefault();
+      keys[key] = false;
+      btn.style.background = 'rgba(255, 255, 255, 0.1)';
+    });
+    
+    btn.addEventListener('mouseleave', (e) => {
+      keys[key] = false;
+      btn.style.background = 'rgba(255, 255, 255, 0.1)';
+    });
+  });
+}
+/**
+ * Llamar la inicialización cuando el DOM esté listo
+ */
+document.addEventListener('DOMContentLoaded', () => {
+  inicializarControlesMoviles();
+});
+/**
+ * HTML actualizado para los controles (usar en tu HTML)
+ */
+
+
 

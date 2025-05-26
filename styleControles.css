@@ -1,0 +1,86 @@
+#mobileControls {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none; /* Oculto por defecto */
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  padding: 15px;
+  backdrop-filter: blur(10px);
+}
+
+#mobileControls.visible {
+  display: block;
+}
+
+#mobileControls .grid {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  grid-template-rows: repeat(2, 60px);
+  gap: 10px;
+  justify-items: center;
+  align-items: center;
+}
+
+#mobileControls .ctrl {
+  width: 50px;
+  height: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: white;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#mobileControls .ctrl:active {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0.95);
+}
+
+#mobileControls .ctrl[data-dir="ArrowUp"] {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+#mobileControls .ctrl[data-dir="ArrowLeft"] {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+#mobileControls .ctrl[data-dir="ArrowRight"] {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+#mobileControls .ctrl[data-dir="ArrowDown"] {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.spacer {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+/* Mostrar controles solo en dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+  #mobileControls.visible {
+    display: block;
+  }
+}
+
+/* Ocultar en desktop */
+@media (hover: hover) and (pointer: fine) {
+  #mobileControls {
+    display: none !important;
+  }
+}
