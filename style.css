@@ -12,7 +12,7 @@ body {
 canvas { 
   border: 10px solid #333;
   background: white; 
-  display: flex; 
+  display: none; 
   margin: 20px auto; 
   box-shadow: 0 0 30px rgba(255,255,255,0.2);
 }
@@ -229,7 +229,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
-  display: none; /* Solo se muestra en móvil */
+  display: flex; /* Solo se muestra en móvil */
   text-align: center;
 }
 

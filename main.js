@@ -77,6 +77,22 @@
     document.addEventListener('keydown', e => keys[e.key] = true);
     document.addEventListener('keyup', e => keys[e.key] = false);
 
+    
+/**
+ * Controles moviles
+ */
+// Emula las teclas de flechas con botones
+document.querySelectorAll('#mobileControls .ctrl').forEach(btn => {
+  const key = btn.dataset.dir;
+
+  btn.addEventListener('touchstart', () => keys[key] = true);
+  btn.addEventListener('touchend', () => keys[key] = false);
+
+  // Evitar scroll al tocar
+  btn.addEventListener('touchstart', e => e.preventDefault(), { passive: false });
+});
+
+
     /**
      * Actualizacion del jugador 
      */
@@ -432,20 +448,6 @@ function mostrarRankingEn(pantalla) {
   mostrarRankingEn('Game');
   mostrarRankingEn('End');
 }
-
-/**
- * Controles moviles
- */
-// Emula las teclas de flechas con botones
-document.querySelectorAll('#mobileControls .ctrl').forEach(btn => {
-  const key = btn.dataset.dir;
-
-  btn.addEventListener('touchstart', () => keys[key] = true);
-  btn.addEventListener('touchend', () => keys[key] = false);
-
-  // Evitar scroll al tocar
-  btn.addEventListener('touchstart', e => e.preventDefault(), { passive: false });
-});
 
 /**
  * Volver al inicio
